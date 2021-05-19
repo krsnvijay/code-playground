@@ -48,7 +48,7 @@ public class Vector implements VectorInterface {
 
     @Override
     public void push(int element) {
-        if (length > capacity) {
+        if (length >= capacity) {
             resize(capacity * 2);
         }
         arr[length++] = element;
@@ -56,7 +56,7 @@ public class Vector implements VectorInterface {
 
     @Override
     public void insert(int index, int item) {
-        if (length > capacity) {
+        if (length >= capacity) {
             resize(capacity * 2);
         }
         for (int i = length; i > index; i--) {
@@ -110,7 +110,12 @@ public class Vector implements VectorInterface {
                 arr[writePtr++] = arr[readPtr];
             }
         }
-        return writePtr;
+        int itemsDeleted = 0;
+        while (writePtr < length) {
+            arr[writePtr++] = 0;
+            itemsDeleted++;
+        }
+        return itemsDeleted;
     }
 
     @Override
@@ -124,8 +129,14 @@ public class Vector implements VectorInterface {
 
     @Override
     public void resize(int newCapacity) {
+        int lengthOfArrayToCopy = size();
+        if (newCapacity < size()) {
+            lengthOfArrayToCopy = newCapacity;
+        }
+
         int[] tempArr = new int[newCapacity];
-        System.arraycopy(this.arr, 0, tempArr, 0, arr.length);
+
+        System.arraycopy(this.arr, 0, tempArr, 0, lengthOfArrayToCopy);
         this.arr = tempArr;
         this.capacity = newCapacity;
     }
