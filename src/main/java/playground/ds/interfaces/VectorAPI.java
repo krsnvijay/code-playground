@@ -1,6 +1,6 @@
 package playground.ds.interfaces;
 
-public interface VectorInterface {
+public interface VectorAPI {
     int size();
 
     int capacity();

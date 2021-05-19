@@ -1,10 +1,10 @@
 package playground.ds;
 
-import playground.ds.interfaces.VectorInterface;
+import playground.ds.interfaces.VectorAPI;
 
 import java.util.Arrays;
 
-public class Vector implements VectorInterface {
+public class Vector implements VectorAPI {
     int[] arr;
     int capacity;
     int length;
@@ -80,6 +80,9 @@ public class Vector implements VectorInterface {
         int valueToDelete = arr[length - 1];
         arr[length - 1] = 0;
         length--;
+        if (length < (int) (.25 * capacity)) {
+            resize(capacity / 2);
+        }
         return valueToDelete;
     }
 
@@ -111,9 +114,11 @@ public class Vector implements VectorInterface {
             }
         }
         int itemsDeleted = 0;
-        while (writePtr < length) {
-            arr[writePtr++] = 0;
+        int originalLength = length;
+        while (writePtr < originalLength) {
             itemsDeleted++;
+            writePtr++;
+            pop();
         }
         return itemsDeleted;
     }
