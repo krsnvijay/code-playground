@@ -81,6 +81,18 @@ class LeetCodeArrays {
         return len;
     }
 
+    public static int removeElementBetter(int[] nums, int val) {
+        int writePointer = 0;
+        for (int readPointer = 0; readPointer < nums.length; readPointer++) {
+            if (nums[readPointer] != val) {
+                int tempVal = nums[writePointer];
+                nums[writePointer++] = nums[readPointer];
+                nums[readPointer] = tempVal;
+            }
+        }
+        return writePointer;
+    }
+
 
     public static int removeDuplicates(int[] nums) {
         if (nums.length == 0)
