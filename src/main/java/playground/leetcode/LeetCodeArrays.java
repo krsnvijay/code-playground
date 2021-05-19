@@ -275,6 +275,33 @@ class LeetCodeArrays {
         return incorrectPos;
     }
 
+    public static int thirdMax(int[] nums) {
+        if (nums.length == 1)
+            return nums[0];
+        else if (nums.length == 2) {
+            return Math.max(nums[0], nums[1]);
+        }
+        int[] max = {-1, -1, -1};
+        int writePointer = 0;
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = 0; j < max.length; j++) {
+                if (max[j] != nums[i] && max[j] < nums[i]) {
+                    max[j] = nums[i];
+                    break;
+                }
+            }
+        }
+        int min = max[0];
+        for (int i = 1; i < max.length; i++) {
+            if (max[i] < min) {
+                min = max[i];
+            }
+
+        }
+        return min;
+
+    }
+
 
     public static void main(String[] args) {
         // TODO: replace these with unit tests
@@ -326,5 +353,8 @@ class LeetCodeArrays {
 
         int[] n = {1, 2, 3, 4, 5};
         System.out.println(heightChecker(n));
+
+        int[] o = {1, 2, 3, 6};
+        System.out.println(thirdMax(o));
     }
 }
