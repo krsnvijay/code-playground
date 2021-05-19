@@ -231,6 +231,50 @@ class LeetCodeArrays {
 
     }
 
+    public static void mergeSortInPlace(int[] arr, int beg, int end) {
+        if (end - beg > 1) {
+            int mid = (beg + end) / 2;
+            mergeSortInPlace(arr, beg, mid);
+            mergeSortInPlace(arr, mid, end);
+            mergeInPlace(arr, beg, mid, end);
+        }
+    }
+
+    public static void mergeInPlace(int[] arr, int beg, int mid, int end) {
+        int leftPointer = beg;
+        int rightPointer = mid;
+
+        int[] mergedArr = new int[end - beg];
+        int mergedPointer = 0;
+        while (leftPointer < mid && rightPointer < end) {
+            mergedArr[mergedPointer++] = arr[leftPointer] > arr[rightPointer] ? arr[rightPointer++] : arr[leftPointer++];
+        }
+        while (leftPointer < mid) {
+            mergedArr[mergedPointer++] = arr[leftPointer++];
+        }
+
+        while (rightPointer < end) {
+            mergedArr[mergedPointer++] = arr[rightPointer++];
+        }
+
+        for (int i = beg, k = 0; i < end; i++) {
+            arr[i] = mergedArr[k++];
+        }
+
+    }
+
+    public static int heightChecker(int[] heights) {
+        int[] sortedHeights = Arrays.copyOf(heights, heights.length);
+        mergeSortInPlace(sortedHeights, 0, sortedHeights.length);
+        int incorrectPos = 0;
+        for (int i = 0; i < heights.length; i++) {
+            if (sortedHeights[i] != heights[i]) {
+                incorrectPos++;
+            }
+        }
+        return incorrectPos;
+    }
+
 
     public static void main(String[] args) {
         // TODO: replace these with unit tests
@@ -275,5 +319,12 @@ class LeetCodeArrays {
 
         int[] l = {3, 1, 2, 4};
         System.out.println(Arrays.toString(sortArrayByParity(l)));
+
+        int[] m = {9, 6, 1, 3, 0, 4};
+        mergeSortInPlace(m, 0, m.length);
+        System.out.println(Arrays.toString(m));
+
+        int[] n = {1, 2, 3, 4, 5};
+        System.out.println(heightChecker(n));
     }
 }
