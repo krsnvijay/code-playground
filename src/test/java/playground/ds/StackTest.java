@@ -27,5 +27,8 @@ class StackTest {
 
     @Test
     void pop() {
+        System.out.println(stack);
+        int topVal = stack.peek();
+        assertEquals(topVal, stack.pop());
     }
 }
