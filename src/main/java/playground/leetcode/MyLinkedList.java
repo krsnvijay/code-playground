@@ -142,9 +142,7 @@ public class MyLinkedList {
 
     }
 
-    public ListNode detectCycle(ListNode head) {
 
-    }
 
 
     public static void main(String[] args) {
