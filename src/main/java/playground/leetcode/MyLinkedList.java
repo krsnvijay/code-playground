@@ -3,11 +3,11 @@ package playground.leetcode;
 import java.util.Arrays;
 
 public class MyLinkedList {
-    static class Node {
+    static class ListNode {
         int val;
-        Node next;
+        ListNode next;
 
-        Node(int val) {
+        ListNode(int val) {
             this.val = val;
         }
     }
@@ -15,7 +15,7 @@ public class MyLinkedList {
     /**
      * Initialize your data structure here.
      */
-    Node head;
+    ListNode head;
     int length;
 
     public MyLinkedList() {
@@ -28,7 +28,7 @@ public class MyLinkedList {
     public int get(int index) {
         if (index >= length || index < 0)
             return -1;
-        Node movePtr = head;
+        ListNode movePtr = head;
         for (int i = 0; i < index; i++) {
             movePtr = movePtr.next;
         }
@@ -39,9 +39,9 @@ public class MyLinkedList {
      * Add a node of value val before the first element of the linked list. After the insertion, the new node will be the first node of the linked list.
      */
     public void addAtHead(int val) {
-        Node newNode = new Node(val);
-        newNode.next = head;
-        head = newNode;
+        ListNode newListNode = new ListNode(val);
+        newListNode.next = head;
+        head = newListNode;
         length++;
     }
 
@@ -49,16 +49,16 @@ public class MyLinkedList {
      * Append a node of value val to the last element of the linked list.
      */
     public void addAtTail(int val) {
-        Node newNode = new Node(val);
+        ListNode newListNode = new ListNode(val);
         if (head == null) {
             addAtHead(val);
             return;
         }
-        Node movePtr = head;
+        ListNode movePtr = head;
         while (movePtr.next != null) {
             movePtr = movePtr.next;
         }
-        movePtr.next = newNode;
+        movePtr.next = newListNode;
         length++;
     }
 
@@ -73,19 +73,19 @@ public class MyLinkedList {
         if (index > length) {
             return;
         }
-        if (index == 0){
+        if (index == 0) {
             addAtHead(val);
             return;
         }
-        Node newNode = new Node(val);
-        Node movePtr = head;
+        ListNode newListNode = new ListNode(val);
+        ListNode movePtr = head;
         for (int i = 0; movePtr != null && i < index - 1; i++) {
             movePtr = movePtr.next;
         }
         if (movePtr == null)
             return;
-        newNode.next = movePtr.next;
-        movePtr.next = newNode;
+        newListNode.next = movePtr.next;
+        movePtr.next = newListNode;
         length++;
 
     }
@@ -101,14 +101,14 @@ public class MyLinkedList {
             head = head.next;
             return;
         }
-        Node movePtr = head;
+        ListNode movePtr = head;
         for (int i = 0; movePtr != null && i < index - 1; i++) {
             movePtr = movePtr.next;
         }
         if (movePtr == null || movePtr.next == null)
             return;
 
-        Node curPtr = movePtr.next;
+        ListNode curPtr = movePtr.next;
         movePtr.next = curPtr.next;
         length--;
     }
@@ -117,7 +117,7 @@ public class MyLinkedList {
     public String toString() {
         int[] values = new int[length];
         if (head != null) {
-            Node movePtr = head;
+            ListNode movePtr = head;
             for (int i = 0; i < length; i++) {
                 values[i] = movePtr.val;
                 movePtr = movePtr.next;
@@ -127,12 +127,31 @@ public class MyLinkedList {
                 ",values=" + Arrays.toString(values) + "}";
     }
 
+    public static boolean hasCycle(ListNode head) {
+        if (head == null)
+            return false;
+        ListNode ptr1 = head;
+        ListNode ptr2 = head;
+        while (ptr1.next != null && ptr2.next != null && ptr2.next.next != null) {
+            ptr1 = ptr1.next;
+            ptr2 = ptr2.next.next;
+            if (ptr1 == ptr2)
+                return true;
+        }
+        return false;
+
+    }
+
+    public ListNode detectCycle(ListNode head) {
+
+    }
+
 
     public static void main(String[] args) {
         MyLinkedList myLinkedList = new MyLinkedList();
-        myLinkedList.addAtIndex(0,10);
-        myLinkedList.addAtIndex(0,20);
-        myLinkedList.addAtIndex(1,30);
+        myLinkedList.addAtIndex(0, 10);
+        myLinkedList.addAtIndex(0, 20);
+        myLinkedList.addAtIndex(1, 30);
         System.out.println(myLinkedList);
         System.out.println(myLinkedList.get(0));
     }
