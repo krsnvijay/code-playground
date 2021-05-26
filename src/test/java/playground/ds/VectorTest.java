@@ -83,8 +83,10 @@ class VectorTest {
     @Test
     void delete() {
         int idxToDelete = 3;
+        System.out.println(vector);
         int deletedElement = vector.delete(idxToDelete);
         int expectedElement = values[idxToDelete + 1];
+        System.out.println(vector);
         assertEquals(expectedElement, vector.at(idxToDelete));
     }
 
